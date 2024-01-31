@@ -1,0 +1,19 @@
+# Arquivos de sistema
+.DS_Store
+
+# Dependências
+node_modules/
+
+# Arquivos gerados durante a construção
+dist/
+build/
+*.log
+
+# Arquivos de configuração locais
+.env
+
+# Arquivos de histórico de comandos da linha de comando
+.history
+
+# Cache de pacotes do npm
+npm-debug.log
