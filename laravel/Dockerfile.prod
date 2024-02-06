@@ -1,17 +1,31 @@
+# Stage 1: Build
+FROM php:7.4-cli AS builder
+
+WORKDIR /var/www
+
+RUN apt-get update && \
+  apt-get install libzip-dev -y && \
+  docker-php-ext-install zip
+
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
+  php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+  php -r "unlink('composer-setup.php');"
+
+RUN composer create-project --prefer-dist laravel/laravel laravel
+
+# Stage 2: Production
 FROM php:7.4.7-fpm-alpine
 
 WORKDIR /var/www
 
 RUN rm -rf /var/www/html
 
-# Utiliza a imagem 'builder' para copiar os arquivos do Laravel
+# Copy files from the builder stage
 COPY --from=builder /var/www/laravel .
 
-# Cria um link simbólico de 'public' para 'html'
-RUN ln -s public html
-
-# Corrige o comando 'chow' para 'chown'
+# Correct the command 'chow' to 'chown'
 RUN chown -R www-data:www-data /var/www
+RUN ln -s public html
 
 EXPOSE 9000
 
