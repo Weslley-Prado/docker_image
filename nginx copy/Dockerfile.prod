@@ -1,0 +1,17 @@
+# Use the official Nginx image as the base image
+FROM nginx:1.15.0-alpine
+
+# Remove the default Nginx configuration
+RUN rm /etc/nginx/conf.d/*
+
+# Copy the custom Nginx configuration file
+# COPY nginx.conf /etc/nginx/conf.d/
+
+# # Create directories and files needed for the application
+# RUN mkdir -p /var/www/html && \
+#   touch /var/www/html/index.php
+
+
+FROM nginx:latest
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
