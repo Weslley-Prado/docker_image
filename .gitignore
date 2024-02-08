@@ -17,3 +17,6 @@ build/
 
 # Cache de pacotes do npm
 npm-debug.log
+
+
+mysql/
